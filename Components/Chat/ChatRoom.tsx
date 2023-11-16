@@ -52,9 +52,11 @@ const ChatRoom = ({
 		fetchChatUsers();
 	}, [accessToken, chatId]);
 
-	// 'fetch-messages' 이벤트 등록
+	// 'messages-to-client' 이벤트 등록
 	useEffect(() => {
-		if (socket?.connected) {
+		socket.off('messages-to-client');
+
+		if (socket.connected) {
 			socket.emit('fetch-messages');
 
 			socket.on('messages-to-client', (messagesObject) => {
@@ -63,33 +65,35 @@ const ChatRoom = ({
 		}
 
 		return () => {
-			socket?.off('messages-to-client');
+			socket.off('messages-to-client');
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [socket.connected]);
+	}, [socket]);
 
-	// message-to-client 이벤트 등록
+	// 'message-to-client' 이벤트 등록
 	useEffect(() => {
-		if (socket?.connected) {
+		socket.off('message-to-client');
+
+		if (socket.connected) {
 			socket.on('message-to-client', (responseData) => {
 				setMessages((prevMessages) => [...prevMessages, responseData]);
 			});
 		}
 
 		return () => {
-			socket?.off('message-to-client');
+			socket.off('message-to-client');
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [socket.connected]);
+	}, [socket]);
 
-	// join 이벤트 등록
+	// 'join' 이벤트 등록
 	useEffect(() => {
-		if (socket?.connected) {
+		socket.off('join');
+
+		if (socket.connected) {
 			socket.on('join', (responseData) => {
 				setChatUsers([...chatUsers, ...responseData.users]);
 
 				if (responseData.users[0] !== userId) {
-					Swal.fire(`${responseData.leaver} 님이 퇴장하셨습니다.`);
+					Swal.fire(`${responseData.users[0]} 님이 입장하셨습니다.`);
 				}
 			});
 		}
@@ -97,12 +101,13 @@ const ChatRoom = ({
 		return () => {
 			socket.off('join');
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [chatUsers, socket.connected]);
+	}, [chatUsers, socket, userId]);
 
 	// leave 이벤트 등록
 	useEffect(() => {
-		if (socket?.connected) {
+		socket.off('leave');
+
+		if (socket.connected) {
 			socket.on('leave', (responseData) => {
 				setChatUsers([...chatUsers, ...responseData.users]);
 
@@ -115,13 +120,12 @@ const ChatRoom = ({
 		return () => {
 			socket.off('leave');
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [chatUsers, socket.connected]);
+	}, [chatUsers, socket, userId]);
 
 	// 서버로 메시지 전송
 	const sendMessage = () => {
 		if (newMessage.trim() !== '') {
-			socket?.emit('message-to-server', newMessage);
+			socket.emit('message-to-server', newMessage);
 			setNewMessage('');
 		}
 	};
