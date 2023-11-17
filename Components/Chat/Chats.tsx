@@ -44,14 +44,16 @@ const Chats = ({
 				</li>
 			) : (
 				<li key={message.id} className="flex m-2 place-self-start">
-					<Image
-						src={user.picture}
-						width={50}
-						height={50}
-						alt="User Picture"
-						onClick={useModal ? openProfile : undefined}
-						className="shadow-gray-100 shadow-md rounded-xl"
-					/>
+					<div className="relative w-[45px] h-[45px] overflow-hidden">
+						<Image
+							src={user.picture}
+							layout={'fill'}
+							objectFit={'cover'}
+							alt="User Picture"
+							onClick={useModal ? openProfile : undefined}
+							className="shadow-gray-100 shadow-md rounded-full"
+						/>
+					</div>
 					<div className="flex flex-col ml-2">
 						<p className="text-xs">{user.username}</p>
 						<p className="mt-1 px-5 py-2 text-sm text-white bg-pink-200 rounded-xl">
