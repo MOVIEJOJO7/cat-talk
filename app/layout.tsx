@@ -4,7 +4,6 @@ import './globals.css';
 import ClientProviders from '@/Components/Provider/ClientProvider';
 import Wrapper from '@/Components/Common/Wrapper';
 import AsyncLoadingProvider from '@/Components/Common/AsyncLoading/AsyncLoading';
-import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +20,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<Head>
+			<head>
 				<meta property="og:title" content="Chat Talk" />
 				<meta property="og:url" content="https://cat-talk-seven.vercel.app/" />
 				<meta
@@ -32,7 +31,8 @@ export default function RootLayout({
 					property="og:image"
 					content="https://res.cloudinary.com/dtf6uf7vi/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1700041535/Home/tbh05158.jpg"
 				/>
-			</Head>
+				<link rel="icon" href="/favicon.ico" sizes="any" />
+			</head>
 			<body className={inter.className}>
 				<ClientProviders>
 					<div className="bg-gray-500 h-screen">
