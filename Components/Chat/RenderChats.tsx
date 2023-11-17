@@ -29,7 +29,7 @@ const RenderChats = ({
 	}, [messages.length]);
 
 	return (
-		<ul className="w-full flex flex-col items-center mt-4 mb-16">
+		<ul className="w-full flex flex-col items-center my-16">
 			{messages.map((message, index) => {
 				const myUser = chatUsers.find((user) => user.id === message.userId);
 
