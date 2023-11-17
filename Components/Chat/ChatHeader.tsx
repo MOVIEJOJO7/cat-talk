@@ -34,7 +34,7 @@ const ChatHeader = ({
 	};
 
 	return (
-		<div className="w-full sm:w-[425px] h-14 flex justify-between items-center py-8 bg-gray-200">
+		<div className="fixed w-full sm:w-[425px] h-14 flex justify-between items-center py-8 bg-gray-200">
 			<Image
 				src={'/icon_back.svg'}
 				alt="뒤로 가기"
